@@ -89,3 +89,5 @@ As an RHCE exam candidate, you should be able to handle all responsibilities exp
 - **Use Ansible Vault in playbooks to protect sensitive data**
 
 As with all Red Hat performance-based exams, configurations must persist after reboot without intervention.
+
+[Red Hat Certified Engineer (RHCE) Exam Objectives](https://www.redhat.com/en/services/training/ex294-red-hat-certified-engineer-rhce-exam-red-hat-enterprise-linux-9?section=objectives)

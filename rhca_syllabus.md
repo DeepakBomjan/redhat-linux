@@ -97,3 +97,5 @@ RHCSA exam candidates should be able to accomplish the tasks below without assis
 - Attach persistent storage to a container
 
 As with all Red Hat performance-based exams, configurations must persist after reboot without intervention.
+
+[Red Hat Certified System Administrator (RHCSA) Exam Objectives](https://www.redhat.com/en/services/training/ex200-red-hat-certified-system-administrator-rhcsa-exam?section=objectives)
