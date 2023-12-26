@@ -36,3 +36,17 @@ sed '/###END/i\New Line to Insert' sample.txt
 sed '/###START/,/###END/ {/shyam/d}' sample.txt
 
 ```
+## Example ORS
+```bash
+awk -v ORS=", " '{ print $2 }' input.txt && echo "This is from echo."
+Kotlin, Java, Rust, Python, This is from echo.
+```
+
+## Use of BEGIN and END Rules in Awk
+https://www.baeldung.com/linux/awk-begin-and-end-rules
+
+https://www.baeldung.com/linux/awk-output-same-line
+
+
+
+
