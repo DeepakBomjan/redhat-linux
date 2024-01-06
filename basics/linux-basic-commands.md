@@ -59,3 +59,6 @@
 | `alias` and `unalias` | Sets and removes an alias for a file or command   |
 | `cal`             | Displays a calendar in Terminal                         |
 | `apt-get`         | Manages Debian-based distros package libraries          |
+
+## Ref
+[Linux Command Cheat Sheet](https://gist.github.com/riipandi/3097780)
