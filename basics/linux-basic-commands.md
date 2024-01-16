@@ -61,4 +61,8 @@
 | `apt-get`         | Manages Debian-based distros package libraries          |
 
 ## Ref
-[Linux Command Cheat Sheet](https://gist.github.com/riipandi/3097780)
+1. [Linux Command Cheat Sheet](https://gist.github.com/riipandi/3097780)
+2. [Linux Command Categorised](https://www.howtouselinux.com/post/linux-commands-cheat-sheet)
+3. [Linux-cheat-sheet](https://github.com/sudheerj/Linux-cheat-sheet)
+4. [Learning Bash](https://github.com/JavaZakariae/Linux-commands)
+
