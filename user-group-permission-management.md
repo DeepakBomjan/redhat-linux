@@ -15,3 +15,6 @@
 guestx ALL=(ALL) !ALL
 guestx ALL=NOPASSWD: /sbin/poweroff
 ```
+
+## References
+https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/configuring_basic_system_settings/managing-sudo-access_configuring-basic-system-settings
