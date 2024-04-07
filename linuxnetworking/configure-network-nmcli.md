@@ -62,3 +62,36 @@
     ```bash
     ping <host-name-or-IP-address>
     ```
+### Tutorial 2
+
+1. Adding network connections
+```bash
+ sudo nmcli connection add type ethernet ifname enp0s8
+```
+```bash
+nmcli connection up ethernet-enp0s8
+```
+2. Adjusting connections
+Configuring static ip address
+```bash
+nmcli connection modify ethernet-enp0s8 ipv4.address 192.168.4.26/24
+nmcli connection modify ethernet-enp0s8 ipv4.method manual
+```
+For your changes to take effect, you need to bounce the connection by stopping it and bringing it back up again. 
+```bash
+nmcli connection down ethernet-enp0s8
+```
+```bash
+nmcli connection up ethernet-enp0s8
+
+```
+3. Device management
+    1. Checking device status
+```bash
+nmcli device status
+```
+    2. Showing device details
+    ```bash
+    nmcli device show enp0s8
+    ```
+    
