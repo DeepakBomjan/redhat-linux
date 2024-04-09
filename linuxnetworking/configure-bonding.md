@@ -74,3 +74,4 @@ The network interfaces that are aggregated together are called _slave devices_, 
 
 ## Comparison of Network Teaming to Bonding
 [link](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/networking_guide/sec-comparison_of_network_teaming_to_bonding)
+
