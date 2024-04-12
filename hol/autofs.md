@@ -1,4 +1,9 @@
-## Mount NFS filesystems with autofs    
+## Mount NFS filesystems with autofs  
+
+```bash
+yum install -y autofs
+```
+
 ### Autofs defined
 - Use the kernel-based `automount` utility
 Automounting NFS shares conserves bandwidth and offers better performance compared to static mounts controlled by `/etc/fstab`.
