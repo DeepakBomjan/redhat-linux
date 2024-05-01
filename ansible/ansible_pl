@@ -1,0 +1,105 @@
+### Basic Concepts & Terms
+Host: A remote machine managed by Ansible.
+
+* **Group**: Several hosts grouped together that share a common attribute.
+
+* **Inventory**: A collection of all the hosts and groups that Ansible manages. Could be a static file in the simple cases or we can pull the inventory from remote sources, such as cloud providers.
+
+* **Modules**: Units of code that Ansible sends to the remote nodes for execution.
+
+* **Tasks**: Units of action that combine a module and its arguments along with some other parameters.
+
+​* **​Playbooks**: An ordered list of tasks along with its necessary parameters that define a recipe to configure a system.
+
+* **Roles**: Redistributable units of organization that allow users to share automation code easier.
+
+* **YAML**: A popular and simple data format that is very clean and understandable by humans.
+
+
+
+## Ansible ad hoc Commands
+```bash
+$ ansible [host-pattern] -m [module] -a "[module options]"
+```
+
+**host-pattern**: the managed hosts to run against
+
+`-m`: the module to run
+
+`-a`: the list of arguments required by the module
+
+```bash
+ansible -i hosts all -m ping
+```
+```bash
+ansible all -i hosts -m ansible.builtin.copy -a "src=./hosts dest=/tmp/hosts"
+```
+
+### Intro to Ansible Playbooks
+```yaml
+---
+- name: Intro to Ansible Playbooks
+  hosts: all
+
+  tasks:
+  - name: Copy file hosts with permissions
+    ansible.builtin.copy:
+      src: ./hosts
+      dest: /tmp/hosts_backup
+      mode: '0644'
+  - name: Add the user 'bob'
+    ansible.builtin.user:
+      name: bob
+    become: yes
+    become_method: sudo
+  - name: Upgrade all apt packages
+    apt:
+      force_apt_get: yes
+      upgrade: dist
+    become: yes
+```
+
+To avoid specifying the location of our inventory file every time we can define this via a configuration file (**ansible.cfg**). 
+
+```bash
+[defaults]
+inventory=./hosts
+```
+```bash
+ansible-inventory --list
+```
+
+```bash
+ansible-playbook intro_playbook.yml
+```
+
+### Using Variables in Playbooks
+
+The most common method is to use a **vars** block at the beginning of each playbook. After declaring them, we can use them in tasks. Use **{{ variable_name }}** to reference a variable in a task.
+```yaml
+---
+- name: Variables playbook
+  hosts: all
+  vars:
+      state: latest
+      user: bob
+  tasks:
+  - name: Add the user {{ user }}
+    ansible.builtin.user:
+      name: "{{ user }}"
+  - name: Upgrade all apt packages
+    apt:
+      force_apt_get: yes
+      upgrade: dist
+  - name: Install the {{ state }} of package "nginx"
+    apt:
+      name: "nginx"
+      state: "{{ state }}"
+```
+
+
+
+
+
+### Reference
+https://www.middlewareinventory.com/blog/ansible-playbook-example/
