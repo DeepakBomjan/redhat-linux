@@ -99,3 +99,70 @@ system=db
 ```bash
 ansible server -m setup -a "filter=ansible_local"
 ```
+
+## Create user and password
+```bash
+ansible -i project_inventory.ini client1 -m user -a "name=Baeldung-CS password=$(mkpasswd --method=sha-512 '123')" --become
+```
+
+```bash
+mkpasswd --method=sha-512
+```
+
+## Set password
+
+```yaml
+cat play_pass1.yml
+---
+- name: Create a password for user
+  hosts: client1
+  become: yes
+  tasks:
+    - name: Create a password for user ram
+      user:
+        name: ram
+        password: '$6$2OCdN3heBd$5swl1SfNkeiKd7n/WwZl/FpvhH4VJANl4u9j8kEA9gEjfl5lrqqQibiH2JU2rxW./Za3sp3BS2FabhTuTEAOQ.'
+
+```
+Method -2   
+
+```yaml
+---
+- name: Create a password for user
+  hosts: client1
+  become: yes
+  tasks:
+    - name: Create a password for user ram
+      user:
+        name: ram
+        password: "{{ '1234' | password_hash('sha512') }}"
+```
+
+## Configure remote access
+
+```yaml
+cat user_ssh.yml
+---
+- name: Create user, SSH directory, and transfer SSH keys
+  hosts: client1
+  become: yes   Use become to run tasks as a privileged user (e.g., sudo)
+  tasks:
+    - name: Create SSH directory for ram
+      file:
+        path: /home/ram/.ssh
+        state: directory
+        owner: ram
+        group: ram
+        mode: 0700
+    - name: Generate SSH key for ram
+      user:
+        name: ram
+        generate_ssh_key: yes
+        ssh_key_type: rsa
+        ssh_key_bits: 4096
+        ssh_key_file: /home/ram/.ssh/id_rsa  # Full path is needed here
+    - name: Transfer public key to the target host
+      authorized_key:
+        user: ram
+        key: "{{ lookup('file', '/home/vagrant/.ssh/id_rsa.pub') }}" 
+```
