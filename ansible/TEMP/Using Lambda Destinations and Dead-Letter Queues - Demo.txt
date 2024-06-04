@@ -1,0 +1,179 @@
+Hello cloud guru's and welcome to this lesson,
+where we'll configure Lambda destinations
+and dead-letter queues.
+We'll begin by creating a new function
+and we'll use the latest Python runtime.
+Next, we'll create a standard SNS topic
+and subscribe to the topic using our email address.
+Next, we'll create a destination for successful events.
+We'll invoke the function asynchronously,
+and I'll show you how to do that.
+And then check if an email was received,
+and the email will include details
+of our invocation record, including the function payload.
+Next, we're gonna remove the destination
+because we're gonna be adding a dead-letter queue instead.
+We'll update our function,
+so that it throws an exception,
+then invoke the function again
+and check if an email was received.
+And you'll see the difference
+between the kind of emails you get
+from the dead-letter queue and those you get
+from the destination.
+So if you are ready to have a play
+with destinations and dead-letter queues,
+please join me in the AWS console.
+In the console, first of all, search for Lambda.
+Create Function, call it "my function."
+And the runtime is just gonna be the latest
+Python runtime that's available.
+Accept the rest of the defaults and Create Function.
+After your function has successfully created,
+search for SNS and open that in a new tab.
+And we're gonna create a standard SNS topic.
+We'll call it "my topic," select Next,
+make sure that Standard is selected.
+Scroll down to the bottom and Create Topic.
+Next, we'll create a subscription.
+So select Create Subscription,
+Protocol is gonna be email
+and then Endpoint is going to be the email address
+that will receive notifications from SNS.
+And I want you to add your own email address in here.
+And once you've done that, select Create Subscription.
+Now it's still saying here pending confirmation,
+and that's because we need to confirm our subscription.
+And to do that, you will need to click the link
+in the email that you've received from SNS.
+So here I am in my email and I've got an AWS notification
+asking me to confirm my subscription.
+And if you can't find it in your inbox,
+you may find that these messages
+are going to your spam folder.
+And that's what's happened for me.
+So it's just letting me know that I've chosen
+to subscribe to the topic and I need
+to confirm by clicking this link.
+So select, Confirm Subscription
+and you should get this message
+from SNS saying that you successfully subscribed.
+And once you've successfully subscribed
+your subscription status will show as confirmed.
+So next, let's go back to our function.
+So select the Lambda tab and select Configuration.
+On the left hand side you'll find Destinations
+and select Add Destination.
+The type of invocation
+is gonna be an Asynchronous Invocation,
+so we'll invoke our function asynchronously,
+the condition for using the destination.
+This time I'm gonna add a destination for successful events.
+Destination Type can be an SQSQ, a topic, a Lambda function,
+or even EventBridge,
+but we're gonna select an SNS topic,
+and then down here, select your topic.
+It's giving us this message
+that the function execution role doesn't have permission
+to send results to our SNS topic,
+but it's automatically gonna add
+the permission that we need.
+So then scroll down to the bottom and hit Save.
+After we've done that, we are ready to invoke the function.
+Now this works with an Asynchronous Invocation
+and we can invoke our function asynchronously
+by using the Cloud Shell.
+So open up the Cloud Shell,
+and you can open it up from the bottom here.
+And I've got a command
+that you will find in the resources for this lesson.
+And here is our command.
+AWs Lambda invoke, the name of our function,
+and the invocation type is asynchronous
+and it uses the parameter Event
+to denote that the function will be invoked asynchronously.
+So we can just copy that command,
+come back to your Lambda console,
+and paste in the command, and hit ENTER.
+And if you get a status code of 202,
+then it has successfully invoked.
+So now that we've invoked our function asynchronously,
+we should have received an email with our invocation record.
+So let's check our email.
+And there we go.
+I've got a message from AWS notifications,
+and here is my invocation record.
+So it's got all the information about the invocation,
+the timestamp, the request ID, the ARN of the function,
+and the request payload, including the status code
+and the body message from Lambda.
+So you get quite a lot of information
+from Lambda destinations.
+So now, in the next step,
+we're gonna remove the destination
+because we're gonna add our dead-letter queue instead.
+I'm gonna resize the Cloud Shell,
+select my Destination and select Remove.
+And to add the dead-letter queue,
+on the left and side, select Asynchronous Invocation,
+then select Edit, and then under dead-letter queue service,
+select the dropdown and select Amazon SNS.
+Then select your Topic and hit Save.
+Next we're gonna update our code
+with some code that is going to fail.
+So select Code in your function.
+I'll remove the code and you'll find a link
+to my updated code in the resources for this lesson.
+So I'm just gonna copy everything,
+then back in my function,
+paste everything into my function,
+and this code is just going to raise an exception.
+So, then select Deploy,
+and then we're gonna invoke our function again,
+so back in the Cloud Shell we'll run the same command again.
+I'm gonna use up arrow
+to run the command again and hit ENTER.
+And if it's all worked,
+you should see the same status code of 202.
+So now let's check our email again
+and see if we've received anything
+from the dead-letter queue.
+And it might just take a few minutes
+for the email to arrive.
+So just be patient and it should be with you soon.
+And there we go, we've received another email,
+this time it's from the dead-letter queue.
+And just notice that it doesn't really contain
+any useful information.
+And that's because the purpose of this
+is to let Lambda know that the invocation failed
+so that it knows to try again.
+It's not gonna be useful to us
+to find out what went wrong or to get any information
+about the request or the invocation.
+So if you wanna get information
+about what actually went wrong
+and you want useful information,
+then Lambda destinations is gonna be better for that.
+This is just to let Lambda know
+that there was a failed invocation.
+So for the exam, remember that dead-letter queues
+and destinations can be used for error handling in Lambda.
+Lambda can be configured to send failed events
+to the dead-letter queue for further processing,
+and both SNS or SQS are supported.
+However, no invocation record is gonna be included,
+so you don't get any human readable information.
+It's just used to let Lambda know
+that there's been a failed event that needs to be retried.
+Whereas with Lambda destinations,
+you can handle either successful or failed invocations.
+It works with SNS, SQS, Lambda and EventBridge.
+And with destinations you get the invocation record.
+So when we used SNS it sent us the invocation record
+in the email which includes the response payload
+from the function.
+So that is it for this lesson.
+If you have any questions, let me know.
+Otherwise, I will see you in the next lesson.
+Thank you.
