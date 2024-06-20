@@ -1,0 +1,35 @@
+---
+- name: Monitor directory and copy new files
+  hosts: localhost
+  gather_facts: no
+  connection: local
+
+  vars:
+    watch_directory: /home/ec2-user/ansible-practice/watch
+    destination_directory: /home/ec2-user/ansible-practice/destination
+
+  tasks:
+    - name: Find new files in the directory
+      find:
+        paths: "{{ watch_directory }}"
+        age: 1m
+      register: new_files
+
+    - name: Notify handler if new files are found
+      debug:
+        msg: "New files found, triggering handler."
+      when: new_files.matched > 0
+      notify: 
+        - Copy new files to destination
+        - check files
+
+  handlers:
+    - name: check files
+      debug:
+        msg: "{{ new_files.files }}"
+    - name: Copy new files to destination
+      copy:
+        src: "{{ item.path }}"
+        dest: "{{ destination_directory }}"
+      with_items: "{{ new_files.files }}"
+      when: new_files.matched > 0

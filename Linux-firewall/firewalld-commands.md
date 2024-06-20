@@ -164,3 +164,15 @@ equivalent `iptables`
 sudo iptables -A INPUT -m state --state NEW -p tcp --dport 80 \
 -j LOG --log-prefix "NEW_HTTP_CONN: "
 ```
+
+
+## NFS Server
+```bash
+firewall-cmd --permanent --list-all | grep services
+```
+```bash
+firewall-cmd --permanent --add-service=nfs
+firewall-cmd --permanent --add-service=mountd
+firewall-cmd --permanent --add-service=rpc-bind
+firewall-cmd --reload
+```
