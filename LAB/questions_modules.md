@@ -3,7 +3,9 @@
 1. **Create a new user named 'john'.**
    <details>
    <summary>Show Answer</summary>
-   `sudo useradd john`
+   ```bash
+sudo useradd john
+```
    </details>
 
 2. **Set the password for the user 'john'.**
