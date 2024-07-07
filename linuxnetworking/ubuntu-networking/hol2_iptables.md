@@ -473,3 +473,8 @@ sudo iptables -A INPUT -p tcp --dport 80 -m hashlimit --hashlimit 10/minute --ha
 ### Summary
 
 Rate limiting with `iptables` helps in mitigating attacks by controlling the number of packets processed over time. Using the `limit` and `hashlimit` modules, you can set fine-grained rules to protect services like SSH, HTTP, and ICMP from being overwhelmed. Always test your rules to ensure they work as expected without blocking legitimate traffic.
+
+
+## References
+[IP Accounting](https://www.cyberciti.biz/faq/linux-configuring-ip-traffic-accounting/)
+[IP Tables rules](https://www.cyberciti.biz/tips/linux-iptables-examples.html)
